@@ -27,7 +27,7 @@ def extract_assessment_urls(markdown: str):
 
 # ---------------- MAIN ----------------
 def scrape_catalog():
-    print("🚀 Scraping SHL catalog using start-based pagination")
+    print("Scraping SHL catalog using start-based pagination")
 
     assessment_urls = set()
 
@@ -35,7 +35,7 @@ def scrape_catalog():
         start = PAGE_SIZE * (page - 1) 
         url = f"{CATALOG_BASE}?start={start}&type=1"
 
-        print(f"📄 Scraping page {page} → start={start}")
+        print(f"Scraping page {page} → start={start}")
 
         try:
             result = firecrawl.scrape(
@@ -43,14 +43,14 @@ def scrape_catalog():
                 formats=["markdown"]
             )
         except Exception as e:
-            print("❌ Failed to scrape catalog page:", e)
+            print("Failed to scrape catalog page:", e)
             break
 
         markdown = result.markdown or ""
         urls = extract_assessment_urls(markdown)
 
         if not urls:
-            print("⚠️ No assessments found — stopping pagination.")
+            print("No assessments found — stopping pagination.")
             break
 
         before = len(assessment_urls)
@@ -61,14 +61,14 @@ def scrape_catalog():
         print(f"➕ Added {added} new assessments")
 
         if added == 0:
-            print("⚠️ No new assessments added — stopping.")
+            print("No new assessments added — stopping.")
             break
 
         time.sleep(SLEEP_SECONDS)
 
-    print(f"\n🔗 Total unique assessment URLs found: {len(assessment_urls)}")
+    print(f"\nTotal unique assessment URLs found: {len(assessment_urls)}")
 
-    # 2️⃣ Scrape each assessment page
+    # 2. Scrape each assessment page
     assessments = []
 
     for i, url in enumerate(sorted(assessment_urls), start=1):
@@ -89,14 +89,14 @@ def scrape_catalog():
             time.sleep(SLEEP_SECONDS)
 
         except Exception as e:
-            print("❌ Failed:", e)
+            print("Failed:", e)
 
-    print(f"\n✅ Total scraped assessments: {len(assessments)}")
+    print(f"\nTotal scraped assessments: {len(assessments)}")
 
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         json.dump(assessments, f, indent=2, ensure_ascii=False)
 
-    print(f"💾 Saved to {OUTPUT_FILE}")
+    print(f"Saved to {OUTPUT_FILE}")
 
 
 # ---------------- RUN ----------------

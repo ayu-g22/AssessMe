@@ -9,6 +9,7 @@ from utils_url import build_assessment_url
 INDEX_FILE = "faiss.index"
 META_FILE = "faiss_metadata.json"
 XLS_FILE = "Gen_AI Dataset.xlsx"
+OUTPUT_FILE = "Gen_AI Dataset_with_predictions.xlsx"
 MODEL_NAME = "all-MiniLM-L6-v2"
 TOP_K = 10
 
@@ -54,7 +55,7 @@ for query, relevant_urls in ground_truth.items():
         "recall": round(recall, 4)
     }
 
-# ---------- SAVE BACK ----------
+# ---------- ADD COLUMNS ----------
 df["Predicted_Assessment_URLs"] = df["Query"].map(
     lambda q: query_to_results[q]["predicted"]
 )
@@ -63,6 +64,7 @@ df["Recall@10"] = df["Query"].map(
     lambda q: query_to_results[q]["recall"]
 )
 
-df.to_excel(XLS_FILE, index=False)
+# ---------- SAVE TO NEW FILE ----------
+df.to_excel(OUTPUT_FILE, index=False)
 
-print("✅ Results saved to the SAME XLS file")
+print(f"✅ Results saved to NEW file: {OUTPUT_FILE}")
