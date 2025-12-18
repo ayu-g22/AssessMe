@@ -29,7 +29,7 @@ def main():
     with open(META_FILE, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
 
-    print("✅ FAISS index built and saved")
+    print("FAISS index built and saved")
 
 if __name__ == "__main__":
     main()

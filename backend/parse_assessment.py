@@ -63,7 +63,7 @@ def main():
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         json.dump(structured, f, indent=2, ensure_ascii=False)
 
-    print(f"✅ Structured {len(structured)} assessments with embeddings text")
+    print(f"Structured {len(structured)} assessments with embeddings text")
 
 if __name__ == "__main__":
     main()

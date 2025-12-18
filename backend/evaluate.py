@@ -67,4 +67,4 @@ df["Recall@10"] = df["Query"].map(
 # ---------- SAVE TO NEW FILE ----------
 df.to_excel(OUTPUT_FILE, index=False)
 
-print(f"✅ Results saved to NEW file: {OUTPUT_FILE}")
+print(f"Results saved to NEW file: {OUTPUT_FILE}")
